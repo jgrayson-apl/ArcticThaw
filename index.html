@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- End Responsive -->
+    <link rel="icon" href="./assets/favicon.ico" sizes="32x32" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web-dark.min.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+    <script src="./app/dojo.js"></script>
+    <script src="https://js.arcgis.com/4.198/"></script>
+    <script>require(["Application/init"]);</script>
+  </head>
+  <body class="">
+
+    <!-- DETAILS -->
+    <div class="js-modal modal-overlay" data-modal="app-details-dialog">
+      <div class="modal-content column-14" aria-labelledby="modal" role="dialog">
+        <div class="content-row trailer-half">
+          <div class="app-title font-size-3">Configurable Application</div>
+          <div class="js-modal-toggle esri-interactive icon-ui-close" aria-label="close-modal"></div>
+        </div>
+        <div class="tabs-translucent js-tab-group">
+          <nav class="tab-nav">
+            <a class="tab-title is-active js-tab">About</a>
+            <a class="tab-title js-tab">Data</a>
+          </nav>
+          <section class="tab-contents">
+            <article class="tab-section js-tab-section is-active">
+              <div class="panel">
+                <div class="trailer-half">
+                  The Arctic-boreal zone is warming faster than anywhere else on Earth. This rapid warming is leading to profound changes in arctic-boreal ecosystems, including the thawing of ancient permafrost. However, this warming is not occurring uniformly, with trends varying from region to region.
+                </div>
+                <div class="trailer-half">
+                  This app allows users to explore trends over the past 20-60 years for two critical and related climate variables: near-surface air temperature (based on gridded climate data) and the number of days the ground surface was frozen (based on microwave remote sensing of ground surface freeze-thaw state). Maps display trends inside and outside of the Arctic-boreal zone, and graphs allow users to compare trends from this domain to any location on Earth.
+                </div>
+                <div>
+                  Visitors are encouraged to explore more content related to Arctic-boreal climate change impacts at
+                  <a href="https://woodwell-arctic-boreal-group-whrc.hub.arcgis.com/" target="_blank">Arctic Maps</a>
+                  and the
+                  <a href="https://www.woodwellclimate.org/research-area/arctic/" target="_blank">Woodwell Climate Research Center</a>
+                  .
+                </div>
+              </div>
+            </article>
+            <article class="tab-section js-tab-section">
+              <div class="panel trailer-quarter">
+                <div class="font-size-1 trailer-quarter">
+                  <span class="text-rule">Air Temperature</span>
+                </div>
+                <div class="font-size-0 trailer-quarter">
+                  This variable represents surface air temperature at 1/24° (~4 km) spatial resolution, derived from the TerraClimate data set (Abatzglou et al., 2018).
+                </div>
+                <div class="citation avenir-italic font-size--2">
+                  Abatzoglou, J. T., Dobrowski, S. Z., Parks, S. A., and Hegewisch, K. C.: Data Descriptor: TerraClimate, a high-resolution global dataset of monthly climate and climatic water balance from 1958-2015, Sci. Data, 5, 170191, https://doi.org/10.1038/sdata.2017.191, 2018.
+                </div>
+              </div>
+              <div class="panel">
+                <div class="font-size-1 trailer-quarter">
+                  <span class="text-rule">Frozen Ground</span>
+                </div>
+                <div class="font-size-0 trailer-quarter">
+                  This variable represents the number of days the ground surface was frozen according to the Freeze-thaw Earth System Data Record (FT-ESDR), which is based on satellite microwave remote sensing of brightness temperatures (Kim et al., 2017).
+                </div>
+                <div class="citation avenir-italic font-size--2">
+                  Kim, Y., Kimball, J. S., Glassy, J., and Du, J.: An extended global Earth system data record on daily landscape freeze-thaw status determined from satellite passive microwave remote sensing, Earth Syst. Sci. Data, 9, 133–147, https://doi.org/10.5194/essd-9-133-2017, 2017.
+                </div>
+              </div>
+            </article>
+          </section>
+        </div>
+        <div class="content-row leader-quarter">
+          <div class="content-row">
+            <img src="./assets/esri_science_of_where_white.png" alt="Esri">
+            <img id="app-logo" src="./assets/Woodwell-Logo%20Horizontal-RGB-White.png" alt="Woodwell">
+          </div>
+          <div class="content-row">
+            <label class="content-row trailer-0 margin-right-1">
+              <div class="inline-block font-size--2">hide on startup&nbsp;</div>
+              <input id="hide-startup-input" type="checkbox" style="vertical-align:middle;">
+            </label>
+            <button class="btn btn-white js-modal-toggle">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOP NAVIGATION -->
+    <header id="header-panel" class="content-row padding-left-1 padding-right-1">
+      <div class="content-row">
+        <!-- APP TITLE -->
+        <span class="app-title top-nav-title header-text"></span>
+      </div>
+
+      <div class="content-row">
+        <div class="header-text margin-right-half">Analysis Location</div>
+        <div id="search-container"></div>
+      </div>
+
+      <!-- RIGHT ALIGNED -->
+      <nav class="top-nav-list" role="navigation">
+
+        <div class="top-nav-link">
+          <div class="dropdown js-dropdown">
+            <button class="btn btn-transparent header-text dropdown-btn js-dropdown-toggle" title="Learn more about the thawing arctic..." tabindex="0" aria-haspopup="true" aria-expanded="false">
+              Learn More
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32" class="svg-icon">
+                <path d="M28 9v5L16 26 4 14V9l12 12L28 9z"/>
+              </svg>
+            </button>
+            <nav class="dropdown-menu dropdown-right" role="menu">
+              <span class="dropdown-title font-size-0">Arctic Maps</span>
+              <a href="https://woodwell-arctic-boreal-group-whrc.hub.arcgis.com/" target="_blank" class="dropdown-link" role="menuitem">Mapping Arctic Change</a>
+              <a href="#" target="_blank" class="dropdown-link" role="menuitem">link to StoryMap</a>
+              <a href="#" target="_blank" class="dropdown-link" role="menuitem">link to Other</a>
+              <span class="dropdown-title font-size-0">Woodwell</span>
+              <a href="https://www.woodwellclimate.org/research-area/arctic/" target="_blank" class="dropdown-link" role="menuitem">Woodwell Climate Research Center</a>
+            </nav>
+          </div>
+        </div>
+
+        <!-- SHARE -->
+        <div id="share-link" class="top-nav-link btn-link header-text icon-ui-link" title="share current options..."></div>
+        <!-- APP DETAILS -->
+        <span class="top-nav-link icon-ui-description header-text js-modal-toggle margin-left-1 esri-interactive" title="about this app..." data-modal="app-details-dialog"></span>
+      </nav>
+
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div id="main-container">
+      <div id="view-container" class="content-col panel panel-white panel-no-padding panel-no-border">
+        <div id="view-node" class="loading"></div>
+      </div>
+      <div id="left-container" class="panel panel-white panel-no-border padding-left-1 dir-col">
+
+        <div class="panel chart-panel selected" data-type="temps">
+          <div class="chart-container">
+            <canvas id="temp-means-chart-node" class="chart-node"></canvas>
+          </div>
+          <div class="panel diff-panel panel-no-border margin-left-quarter">
+            <div class="diff-title text-center trailer-half">Trend Difference</div>
+            <label class="diff-section trailer-0">
+              <div class="diff-label">Arctic Boreal Zone</div>
+              <div id="diff-temp-abz-value" class="diff-value text-center">&nbsp;</div>
+              <div class="diff-msg text-right avenir-italic text-darkest-gray">C per decade</div>
+            </label>
+            <label class="diff-section trailer-0">
+              <div class="diff-label">Analysis Location</div>
+              <div id="diff-temp-loc-value" class="diff-value text-center">&nbsp;</div>
+              <div class="diff-msg text-right avenir-italic text-darkest-gray">C per decade</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel chart-panel" data-type="frozen">
+          <div class="chart-container">
+            <canvas id="frozen-days-chart-node" class="chart-node"></canvas>
+          </div>
+          <div class="panel diff-panel panel-no-border margin-left-quarter">
+            <div class="diff-title text-center trailer-half">Trend Difference</div>
+            <label class="diff-section trailer-0">
+              <div class="diff-label">Arctic Boreal Zone</div>
+              <div id="diff-frozen-abz-value" class="diff-value text-center">&nbsp;</div>
+              <div class="diff-msg text-right avenir-italic text-darkest-gray">days per decade</div>
+            </label>
+            <label class="diff-section trailer-0">
+              <div class="diff-label">Analysis Location</div>
+              <div id="diff-frozen-loc-value" class="diff-value text-center">&nbsp;</div>
+              <div class="diff-msg text-right avenir-italic text-darkest-gray">days per decade</div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="trend-layers-panel" class="panel hide">
+      <div class="content-row">
+        <div class="font-size-0 margin-right-half">Trends</div>
+        <fieldset id="trends-list" class="radio-group trailer-0"></fieldset>
+      </div>
+      <div class="leader-half margin-left-11 margin-right-11">
+        <div id="trends-color-ramp"></div>
+        <div class="content-row font-size--3">
+          <span>decrease</span>
+          <span>increase</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="trend-durations-panel" class="panel hide">
+      <div class="content-col">
+        <div class="font-size-0 margin-right-half">Durations</div>
+        <fieldset id="durations-list" class="radio-group content-col trailer-0"></fieldset>
+      </div>
+    </div>
+
+    <div id="share-panel" class="panel panel-theme column-6 hide">
+      <div class="font-size--2">Shareable link has been copied to the clipboard.</div>
+    </div>
+
+    <div id="how-to-panel" class="panel panel-theme column-7 hide">
+      <div class="font-size-0 text-rule">How to interact with the map</div>
+      <ul>
+        <li>
+          Analysis Location
+          <ul>
+            <li>click anywhere on the map</li>
+            <li>use the search input above to find a place</li>
+          </ul>
+        </li>
+        <li>
+          Map Navigation
+          <ul>
+            <li>use home button to reset the extent</li>
+            <li>use +/- buttons to zoom in/out</li>
+            <li>use right-click-drag to rotate the map</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+  </body>
+</html>

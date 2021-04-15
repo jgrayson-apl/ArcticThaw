@@ -1,0 +1,940 @@
+
+ <!-- SIGN IN NODE -->
+  <span id="sign-in-node" class="top-nav-link header-text esri-interactive icon-ui-user margin-left-1 hide">Sign In</span>
+  <!-- USER NODE -->
+  <div id="user-node" class="dropdown js-dropdown margin-left-1 header-text hide">
+    <div class="top-nav-link icon-ui-user header-text margin-left-1 esri-interactive js-dropdown-toggle" tabindex="0" aria-haspopup="true" aria-expanded="false">
+      <span id="user-firstname-node"></span>
+    </div>
+    <nav class="dropdown-menu dropdown-right" role="menu">
+      <div class="dropdown-title text-center">
+        <div>
+          <img id="user-thumb-node" src="" class="margin-right-third">
+          <span id="user-fullname-node"></span>
+        </div>
+        <div id="username-node" class="font-size--3"></div>
+      </div>
+      <div id="sign-out-node" class="dropdown-link esri-interactive icon-ui-sign-out" role="menu-item">Sign Out</div>
+    </nav>
+  </div>
+
+/*initializeUserSignIn: function(){
+
+const checkSignInStatus = () => {
+  return IdentityManager.checkSignInStatus(this.base.portal.url).then(userSignIn).catch(userSignOut).then();
+};
+IdentityManager.on("credential-create", checkSignInStatus);
+
+// SIGN IN NODE //
+const signInNode = document.getElementById("sign-in-node");
+const userNode = document.getElementById("user-node");
+
+// UPDATE UI //
+const updateSignInUI = () => {
+  if(this.base.portal.user){
+    document.getElementById("user-firstname-node").innerHTML = this.base.portal.user.fullName.split(" ")[0];
+    document.getElementById("user-fullname-node").innerHTML = this.base.portal.user.fullName;
+    document.getElementById("username-node").innerHTML = this.base.portal.user.username;
+    document.getElementById("user-thumb-node").src = this.base.portal.user.thumbnailUrl;
+    signInNode.classList.add('hide');
+    userNode.classList.remove('hide');
+  } else {
+    signInNode.classList.remove('hide');
+    userNode.classList.add('hide');
+  }
+  return promiseUtils.resolve();
+};
+
+// SIGN IN //
+const userSignIn = () => {
+  this.base.portal = new Portal({ url: this.base.config.portalUrl, authMode: "immediate" });
+  return this.base.portal.load().then(() => {
+    this.emit("portal-user-change", {});
+    return updateSignInUI();
+  }).catch(console.warn).then();
+};
+
+// SIGN OUT //
+const userSignOut = () => {
+  IdentityManager.destroyCredentials();
+  this.base.portal = new Portal({});
+  return this.base.portal.load().then(() => {
+    this.base.portal.user = null;
+    this.emit("portal-user-change", {});
+    return updateSignInUI();
+  }).catch(console.warn).then();
+
+};
+
+// USER SIGN IN //
+signInNode.addEventListener("click", userSignIn);
+
+// SIGN OUT NODE //
+const signOutNode = document.getElementById("sign-out-node");
+if(signOutNode){
+  signOutNode.addEventListener("click", userSignOut);
+}
+
+return checkSignInStatus();
+},*/
+
+/*const defaultLatitudeSymbol = {
+  type: 'simple-marker',
+  style: 'circle',
+  size: '9pt',
+  color: 'white',
+  outline: {
+    color: 'limegreen',
+    width: '1.2pt'
+  }
+};*/
+
+// LOCATIONS LAYER //
+/*const analysisLocationsLayer = new GraphicsLayer({
+  title: "Analysis Location",
+  graphics: [analysisLocationGraphic]
+});*/
+
+/*const analysisLocationsLayer = new FeatureLayer({
+  fields: [
+    { name: "ObjectID", alias: "ObjectID", type: "oid" },
+    { name: "type", alias: "Type", type: "string" },
+    { name: "latitude", alias: "Latitude", type: "double" }
+  ],
+  objectIdField: "ObjectID",
+  geometryType: "point",
+  spatialReference: SpatialReference.WGS84,
+  source: [],
+  renderer: {
+    type: 'unique-value',
+    field: 'type',
+    defaultSymbol: defaultSymbol,
+    uniqueValueInfos: [
+      { value: 'default', symbol: defaultLatitudeSymbol },
+      { value: 'user-defined', symbol: userDefinedSymbol }
+    ]
+  }
+});*/
+// view.map.add(analysisLocationsLayer);
+
+// ADD ANALYSIS LOCATIONS //
+/*const addAnalysisLocations = (analysisLocations) => {
+  return promiseUtils.create((resolve, reject) => {
+
+    const analysisLocationFeatures = analysisLocations.map(analysisLocation => {
+      return {
+        geometry: analysisLocation,
+        attributes: {
+          type: _analysisLatitudes.includes(analysisLocation.latitude) ? "default" : "user-defined",
+          latitude: analysisLocation.latitude
+        }
+      };
+    });
+
+    const analysisLocationsQuery = analysisLocationsLayer.createQuery();
+    analysisLocationsQuery.set({ where: '1=1' });
+    analysisLocationsLayer.queryFeatures(analysisLocationsQuery).then(previousAnalysisLocationsFS => {
+      analysisLocationsLayer.applyEdits({
+        deleteFeatures: previousAnalysisLocationsFS.features, addFeatures: analysisLocationFeatures
+      }).then(() => {
+        analysisLocationsLayer.queryFeatures(analysisLocationsQuery).then(analysisLocationsFS => {
+          resolve(analysisLocationsFS.features);
+        }).catch(reject);
+      }).catch(reject);
+    }).catch(reject);
+
+  });
+};*/
+
+// ANALYSIS LOCATIONS //
+/*const _analysisLatitudes = [50.0, 60.0, 70.0, 80.0];
+const _longitudeAnalysisLocations = geoMapPoint => {
+  const analysisLatitudes = [..._analysisLatitudes].concat(geoMapPoint.latitude);
+  const sortedLatitudes = analysisLatitudes.sort((a, b) => { return (a - b); });
+  return sortedLatitudes.reduce((locations, analysisLatitude) => {
+    locations.push(new Point({ spatialReference: geoMapPoint.spatialReference, longitude: geoMapPoint.longitude, latitude: analysisLatitude }));
+    return locations;
+  }, []);
+};*/
+
+
+// const _predictionStart = null;
+// const _prediction2050 = null;
+/*const _createDurationInfo = (analysisLocations) => {
+  return analysisLocations.reduce((infos, analysisLocation) => {
+    return infos.set(analysisLocation.latitude, { _predictionStart, _prediction2050 });
+  }, new Map());
+};*/
+
+/*const locationMultipoint = new Multipoint({
+  spatialReference: SpatialReference.WGS84,
+  points: analysisLocations.map(analysisLocation => [analysisLocation.longitude, analysisLocation.latitude])
+});*/
+
+/*Promise.all(getSamplesHandles).then((sampleInfos) => {
+console.info(sampleInfos);
+
+/!*const allDurationInfos = sampleInfos.map(sampleInfo => {
+  console.info(sampleInfo.layer.title);
+
+  const durationInfos = sampleInfo.samples.reduce((infos, sample) => {
+    console.info(sample);
+
+    /!*const [predictionStart, prediction2050] = sample.value.split(' ').map(value => Number(value));
+    const duration = Number(sample.attributes.Name.replace(/Predict/, ''));
+
+    const durationInfo = infos.get(duration) || _createDurationInfo(analysisLocations);
+    durationInfo.set(sample.location.y, { predictionStart, prediction2050 });*!/
+
+    infos.set(sample.name, sample.value);
+
+    return infos;
+  }, new Map());
+
+  return durationInfos;
+});*!/
+
+resolve(allDurationInfos);
+}).catch(reject);*/
+
+/*esriRequest(`${imageryLayer.url}/getSamples`, {
+query: {
+  geometry: JSON.stringify(locationMultipoint.toJSON()),
+  geometryType: "esriGeometryMultipoint",
+  outFields: '*',
+  returnFirstValueOnly: false,
+  interpolation: "RSP_NearestNeighbor",
+  f: "json"
+}
+}).then(samplesResponse => {
+
+const durationInfos = samplesResponse.data.samples.reduce((infos, sample) => {
+
+  const [predictionStart, prediction2050] = sample.value.split(' ').map(value => Number(value));
+  const duration = Number(sample.attributes.Name.replace(/Predict/, ''));
+
+  const durationInfo = infos.get(duration) || _createDurationInfo(analysisLocations);
+  durationInfo.set(sample.location.y, { predictionStart, prediction2050 });
+  infos.set(duration, durationInfo);
+
+  return infos;
+}, new Map());
+
+resolve(durationInfos);
+
+}).catch(reject);*/
+
+//const endYear = 2018;
+//const longitudeNode = document.getElementById('longitude-label');
+
+// const _analysisLatitudes = [50.0, 60.0, 70.0, 80.0];
+// const resultsTableByLatitude = document.getElementById('results-table-by-latitude');
+
+// const _trendDurationsYears = [60, 50, 40, 30, 20, 10];
+/*const resultsTableByTrend = document.getElementById('results-table-by-trend');
+const resultsTableByTrendHead = resultsTableByTrend.querySelector(`thead tr`);
+const resultsTableByTrendBody = resultsTableByTrend.querySelector(`tbody`);*/
+
+
+/*let _durationInfos = null;
+this.getDurationInfo = (duration) => {
+  let durationInfo = null;
+  if(_durationInfos){
+    _durationInfos.forEach((_durationInfo, _duration) => {
+      if(_duration === duration){
+        durationInfo = _durationInfo;
+      }
+    });
+  }
+  return durationInfo;
+};*/
+
+/*this.getPredictedTemperatureChange = ({ mapPoint, analysisLocations }) => {
+  return promiseUtils.create((resolve, reject) => {
+
+    longitudeNode.innerHTML = mapPoint.longitude.toFixed(4);
+
+    _getLocationInfo(analysisLocations).then((durationInfos) => {
+      _durationInfos = durationInfos;
+
+      resultsTableByLatitude.querySelectorAll('.user-defined').forEach(node => { node.remove(); });
+      resultsTableByTrend.querySelectorAll('.user-defined').forEach(node => { node.remove(); });
+
+      const currentDuration = this.getDuration();
+      durationInfos.forEach((durationInfo, duration) => {
+        if(duration === currentDuration){ this.updateTempCharts(durationInfo); }
+
+        const durationLabel = duration.toFixed(0);
+
+        durationInfo.forEach(({ predictionStart, prediction2050 }, latitude) => {
+          //console.info(latitude, predictionStart, prediction2050)
+
+          const latitudeLabel = latitude.toFixed(4);
+          const afterLatitude = _analysisLatitudes.find(_analysisLatitude => { return (_analysisLatitude > latitude); }) || 80.0;
+
+          //
+          // BY LATITUDE //
+          //
+          let trByLatitudeNode = resultsTableByLatitude.querySelector(`tr[data-latitude="${latitudeLabel}"]`);
+          if(!trByLatitudeNode){
+
+            const afterLatitudeTR = resultsTableByLatitude.querySelector(`tr[data-latitude="${afterLatitude.toFixed(4)}"]`);
+            const position = (latitude < 80.0) ? 'after' : 'before'
+            trByLatitudeNode = domConstruct.create('tr', { className: 'user-defined', 'data-latitude': latitudeLabel }, afterLatitudeTR, position);
+            domConstruct.create('td', { innerHTML: `lat: ${latitudeLabel}` }, trByLatitudeNode);
+            _trendDurationsYears.forEach(trendDurationsYear => {
+              domConstruct.create('td', { className: 'user-defined', 'data-trend': trendDurationsYear.toFixed(0) }, trByLatitudeNode);
+            });
+
+          }
+          let cellByLatitudeNode = trByLatitudeNode.querySelector(`td[data-trend="${durationLabel}"]`);
+          /!*if(!cellByLatitudeNode){
+            // THIS SHOULD NOT HAPPEN //
+            console.error("THIS SHOULD NOT HAPPEN !!!!!!!");
+            //cellByLatitudeNode = domConstruct.create('td', { className: 'user-defined', 'data-trend': durationLabel }, trByLatitudeNode);
+          }*!/
+
+          //
+          // BY TREND DURATION //
+          //
+          const headCellByTrendNode = resultsTableByTrendHead.querySelector(`td[data-latitude="${latitudeLabel}"]`);
+          if(!headCellByTrendNode){
+
+            const afterLatitudeTD = resultsTableByTrendHead.querySelector(`td[data-latitude="${afterLatitude.toFixed(4)}"]`);
+            const position = (latitude < 80.0) ? 'before' : 'after';
+
+            domConstruct.create('td', {
+              className: 'user-defined',
+              'data-latitude': latitudeLabel,
+              innerHTML: `lat: ${latitudeLabel}`
+            }, afterLatitudeTD, position);
+
+            resultsTableByTrendBody.querySelectorAll('tr').forEach(node => {
+              const afterLatitudeTD = node.querySelector(`td[data-latitude="${afterLatitude.toFixed(4)}"]`);
+              domConstruct.create('td', {
+                className: 'user-defined',
+                'data-latitude': latitudeLabel
+              }, afterLatitudeTD, position);
+            });
+          }
+
+          let cellByTrendNode = resultsTableByTrend.querySelector(`tr[data-trend="${durationLabel}"] td[data-latitude="${latitude.toFixed(4)}"]`);
+          /!*if(!cellByTrendNode){
+            // THIS SHOULD NOT HAPPEN //
+            console.error("THIS SHOULD NOT HAPPEN !!!!!!!");
+          }*!/
+
+          if(predictionStart && prediction2050){
+            const change = (prediction2050 - predictionStart);
+            const direction = (change > 0) ? '+' : '-';
+            const changeMessage = `${direction}${Math.abs(change).toFixed(1)}&deg;`;
+            const predictionMessage = `${predictionStart.toFixed(1)}&deg; to ${prediction2050.toFixed(1)}&deg;`
+
+            if(cellByLatitudeNode){
+              cellByLatitudeNode.innerHTML = '';
+              domConstruct.create('div', {
+                className: 'text-center font-size-1 animate-fade-in',
+                innerHTML: changeMessage
+              }, cellByLatitudeNode);
+              domConstruct.create('div', {
+                className: 'desktop-only text-center font-size--3 animate-fade-in',
+                innerHTML: predictionMessage
+              }, cellByLatitudeNode);
+            }
+
+            if(cellByTrendNode){
+              cellByTrendNode.innerHTML = '';
+              domConstruct.create('div', {
+                className: 'text-center font-size-1 animate-fade-in',
+                innerHTML: changeMessage
+              }, cellByTrendNode);
+              domConstruct.create('div', {
+                className: 'desktop-only text-center font-size--3 animate-fade-in',
+                innerHTML: predictionMessage
+              }, cellByTrendNode);
+            }
+
+          } else {
+
+            if(cellByLatitudeNode){
+              cellByLatitudeNode.innerHTML = '';
+              domConstruct.create('div', { className: 'text-center text-red animate-fade-in', innerHTML: 'N/A' }, cellByLatitudeNode);
+            }
+            if(cellByTrendNode){
+              cellByTrendNode.innerHTML = '';
+              domConstruct.create('div', { className: 'text-center text-red animate-fade-in', innerHTML: 'N/A' }, cellByTrendNode);
+            }
+          }
+        })
+      });
+
+      resolve();
+    }).catch(reject);
+  });
+};*/
+
+
+trendLayers.forEach(trendLayer => {
+trendLayer.pixelFilter = (pixelData) => {
+  if(pixelData === null || pixelData.pixelBlock === null || pixelData.pixelBlock.pixels === null){
+    return;
+  }
+
+  /*const pixelBlock = pixelData.pixelBlock;
+
+  const minValue = pixelBlock.statistics[0].minValue;
+  const maxValue = pixelBlock.statistics[0].maxValue;
+  const factor = 255.0 / (maxValue - minValue);
+
+  const pixels = pixelBlock.pixels;
+  const rBand = pixels[0];
+  const gBand = pixels[1];
+  const bBand = pixels[2];
+  const aBand = [];
+
+  const numPixels = pixelBlock.width * pixelBlock.height;
+  for(let i = 0; i < numPixels; i++){
+    const tempValue = rBand[i];
+    const red = (tempValue - minValue) * factor;
+    aBand[i] = 127; //255 - red;
+  }
+  pixelData.pixelBlock.pixels = [rBand, gBand, bBand, aBand];
+  pixelData.pixelBlock.pixelType = "U8";*/
+
+
+  /*const pixelBlock = pixelData.pixelBlock;
+  const numPixels = pixelBlock.width * pixelBlock.height;
+  const bands = pixelBlock.pixels;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+
+  const context = canvas.getContext('2d');
+  const imageData = context.getImageData(0, 0, width, height);
+  const pixels = imageData.data;
+
+  for(let pixel_index = 0; pixel_index < numPixels; pixel_index++){
+    const value = bands[0][pixel_index];
+    const color = this.colorMap[value] || { Red: 0, Green: 0, Blue: 0, Alpha: 0 };
+    pixels[4 * pixel_index] = color.Red || 0;
+    pixels[4 * pixel_index + 1] = color.Green || 0;
+    pixels[4 * pixel_index + 2] = color.Blue || 0;
+    pixels[4 * pixel_index + 3] = color.Alpha || 0;
+  }
+  context.putImageData(imageData, 0, 0);*/
+
+
+}
+});
+
+
+/*const defaultSymbol = {
+  type: 'simple-marker',
+  style: 'circle',
+  size: '5pt',
+  color: 'silver',
+  outline: {
+    color: 'gray',
+    width: '1pt'
+  }
+};*/
+
+/*const lineGraphic = new Graphic({
+  symbol: {
+    type: 'simple-line',
+    style: 'dash',
+    color: 'lime',
+    width: '1.5pt',
+    marker: {
+      style: 'circle',
+      color: 'lime',
+      placement: "begin-end"
+    }
+  }
+});*/
+
+// DISPLAY USER LINE //
+  /*const longitudePolyline = (userMapPoint) => {
+    return new Polyline({
+      spatialReference: view.spatialReference,
+      paths: [
+        [90.0, userMapPoint.latitude].map(latitude => {
+          const geoMapPoint = new Point({ spatialReference: SpatialReference.WGS84, longitude: userMapPoint.longitude, latitude: latitude })
+          const mapPoint = projection.project(geoMapPoint, view.spatialReference);
+          return [mapPoint.x, mapPoint.y]
+        })
+      ]
+    })
+  };*/
+
+  // UPDATE LINE AS POINTER MOVES //
+  // view.on('pointer-move', pointerEvt => {
+  //   const geoMapPoint = projection.project(view.toMap(pointerEvt), SpatialReference.WGS84);
+  //   lineGraphic.geometry = longitudePolyline(geoMapPoint);
+  // });
+
+/*this.updateTempCharts = (durationInfo) => {
+//console.info(durationInfo);
+
+const defaultDataset = {
+  borderWidth: 2.5,
+  borderColor: 'limegreen',
+  pointBackgroundColor: 'white',
+  pointBorderColor: "limegreen",
+  pointRadius: 6.5,
+  fill: false
+};
+
+//
+// TEMPERATURES //
+//
+const temperatureDatasets = [];
+durationInfo.forEach(({ predictionStart, prediction2050 }, latitude) => {
+  temperatureDatasets.push({
+    ...defaultDataset,
+    data: [
+      { x: 2018, y: predictionStart, latitude: latitude },
+      { x: 2050, y: prediction2050, latitude: latitude }
+    ]
+  });
+});
+temperaturesChart.data.datasets = temperatureDatasets;
+temperaturesChart.update();
+
+//
+// TEMPERATURE CHANGES //
+//
+const changesDatasets = [{
+  borderWidth: 1.2,
+  borderColor: 'darkred',
+  borderDash: [5, 15],
+  pointBackgroundColor: 'white',
+  pointBorderColor: "darkred",
+  pointRadius: 3.5,
+  fill: false,
+  data: [
+    { x: 2018, y: 0.0, latitude: 'baseline' },
+    { x: 2050, y: _changeBaseline, latitude: 'baseline' }
+  ]
+}];
+durationInfo.forEach(({ predictionStart, prediction2050 }, latitude) => {
+  changesDatasets.push({
+    ...defaultDataset,
+    data: [
+      { x: 2018, y: 0.0, latitude: latitude },
+      { x: 2050, y: (prediction2050 - predictionStart), latitude: latitude }
+    ]
+  });
+});
+frozenDaysChart.data.datasets = changesDatasets;
+frozenDaysChart.update();
+
+};*/
+
+  /*
+  const stretchLabel = domConstruct.create('label', { innerHTML: 'stretch type', className: 'trailer-quarter' }, trendRendererOptions);
+  const stretchSelect = domConstruct.create('select', { id: 'stretch-input', className: 'trailer-quarter' }, stretchLabel);
+  domConstruct.create('option', { innerHTML: 'Standard Deviation', value: 3 }, stretchSelect);
+  domConstruct.create('option', { innerHTML: 'Histogram Equalization', value: 4 }, stretchSelect);
+  domConstruct.create('option', { innerHTML: 'MinMax', value: 5 }, stretchSelect);
+  //domConstruct.create('option', { innerHTML: 'PercentClip', value: 6 }, stretchSelect);
+  stretchSelect.addEventListener('change', () => {
+    setTrendLayersRenderer();
+  });
+  */
+
+  /*
+    Stretch type 3 (StandardDeviation) requires NumberOfStandardDeviations, Statistics, or DRA (true).
+    Stretch type 4 (Histogram Equalization) requires the source dataset to have histograms or additional DRA (true).
+    Stretch type 5 (MinMax) requires Statistics or DRA (true).
+    "Min" : <min>, //double
+    "Max" : <max>, //double
+    "NumberOfStandardDeviations" : <NumberOfStandardDeviations>, //double (e.g. 2.5)
+   */
+
+  /*
+  const draLabel = domConstruct.create('label', { innerHTML: 'dynamic range adjustment', className: 'trailer-quarter' }, trendRendererOptions);
+  const draInput = domConstruct.create('input', { id: 'dra-input', type: 'checkbox' }, draLabel);
+  draInput.addEventListener('click', () => {
+    setTrendLayersRenderer();
+  });
+  */
+
+  /*const flipLabel = domConstruct.create('label', { innerHTML: 'flip ramp', className: 'trailer-0' }, trendRendererOptions);
+  const flipInput = domConstruct.create('input', { id: 'flip-input', type: 'checkbox' }, flipLabel);
+  flipInput.addEventListener('click', () => {
+    setTrendLayersRenderer();
+  });*/
+
+  /*const trendRampsPanel = domConstruct.create('div', { className: 'color-ramps-panel panel' }, trendRendererPanel);
+  const ramps = colorRamps.byTag({ includedTags: ["diverging"] });
+  ramps.forEach(ramp => {
+    const rampOption = domConstruct.create('div', { innerHTML: ramp.name, className: 'color-ramps-node trailer-half' }, trendRampsPanel);
+    const colorRampNode = symbolUtils.renderColorRampPreviewHTML(ramp.colors, { align: "horizontal", width: 200 });
+    rampOption.appendChild(colorRampNode);
+    rampOption.addEventListener('click', () => {
+      _colors = ramp.colorsForClassBreaks[2].colors;
+      setTrendLayersRenderer();
+    });
+  });*/
+
+  //
+  // https://developers.arcgis.com/documentation/common-data-types/raster-function-objects.htm
+  //
+  // (0 = None, 3 = StandardDeviation, 4 = Histogram Equalization, 5 = MinMax, 6 = PercentClip, 9 = Sigmoid)
+  //
+  /*const _setTrendLayersRenderer = (trendLayer, multipartColorRamp) => {
+
+    // SLOPE BAND INDEX //
+    const slopeBandIndex = 0;
+
+    // ONLY DISPLAY THE SLOPE BAND //
+    const extractBandRF = new RasterFunction({
+      functionName: 'ExtractBand',
+      functionArguments: {
+        BandIDs: [slopeBandIndex],
+        Raster: "$$"
+      }
+    });
+
+    const stats = trendLayer.serviceRasterInfo.statistics[slopeBandIndex];
+    //console.info(trendLayer.title, stats)
+
+    const renderStretchInfos = {
+      'Temp Means Trends': {
+        stretchMin: -0.04,
+        stretchMax: 0.04,
+        avg: 0.030216409885988314,
+        max: 0.11847522417883738,
+        min: -0.02165968465487822,
+        stddev: 0.012441543350371759
+      },
+      'Frozen Days Trends': {
+        stretchMin: -0.2, // -0.6,
+        stretchMax: 0.2,  // 0.6,
+        min: -2.0, //-7.130251884460449,
+        max: 2.0, //4.185009479522705,
+        avg: -0.24971247235947172,
+        stddev: 0.37222849013071047
+      }
+    };
+
+    const stretchRF = new RasterFunction({
+      functionName: 'Stretch',
+      functionArguments: {
+        StretchType: 3,
+        NumberOfStandardDeviations: 2.0,
+        // UseGamma: true,
+        // Gamma: [1.0],
+        // DRA: true,
+        Statistics: [stats.min, stats.max, stats.avg, stats.stddev],
+        //Statistics: [renderStretchInfos[trendLayer.title].stretchMin, renderStretchInfos[trendLayer.title].stretchMax, stats.avg, stats.stddev],
+        // Min: [renderStretchInfos[trendLayer.title].stretchMin],
+        // Max: [renderStretchInfos[trendLayer.title].stretchMax],
+        // NumberOfStandardDeviations: 1.5,
+        // StretchType: stretchSelect.value,
+        // DRA: draInput.checked ? true : null,
+        // Statistics: !draInput.checked ? [stats.min, stats.max, stats.avg, stats.stddev] : null,
+        // NumberOfStandardDeviations: (stretchSelect.value === 3) ? 2.0 : null,
+        // Min: (stretchSelect.value === 5) ? renderStretchInfos[trendLayer.title].stretchMin : null,
+        // Max: (stretchSelect.value === 5) ? renderStretchInfos[trendLayer.title].stretchMax : null,
+        Raster: extractBandRF
+      },
+      //outputPixelType: "u8"
+    });
+
+    trendLayer.renderingRule = new RasterFunction({
+      functionName: "Colormap",
+      functionArguments: {
+        colorramp: multipartColorRamp,
+        Raster: stretchRF
+      }
+    });
+
+  }*/
+
+  /*const setTrendLayersRenderer = () => {
+    if(_colors == null){return;}
+
+    const rampColors = _colors.map(color => {
+      return color.toRgb().concat(255);
+    });
+    //flipInput.checked && rampColors.reverse();
+
+    const multipartColorRamp = rampColors.reduce((multipartRamp, color, colorIdx) => {
+      if(colorIdx > 0){
+        multipartRamp.colorRamps.push({
+          type: "algorithmic",
+          fromColor: rampColors[colorIdx - 1],
+          toColor: color,
+          algorithm: "esriHSVAlgorithm"     //<"esriHSVAlgorithm" | "esriCIELabAlgorithm" | "esriLabLChAlgorithm">
+        });
+      }
+      return multipartRamp;
+    }, { type: "multipart", colorRamps: [] });
+
+    trendLayers.forEach(trendLayer => {
+      _setTrendLayersRenderer(trendLayer, multipartColorRamp);
+    });
+  }*/
+
+  // SET INITIAL RENDERER //
+  //setTrendLayersRenderer();
+
+
+ /*
+const ShadowLineElement = Chart.elements.Line.extend({
+  draw: function(){
+    const ctx = this._chart.ctx;
+    const originalStroke = ctx.stroke;
+    ctx.stroke = function(){
+      ctx.save();
+      ctx.shadowColor = 'rgba(255,255,255,0.9)';
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      originalStroke.apply(this, arguments);
+      ctx.restore();
+    };
+    Chart.elements.Line.prototype.draw.apply(this, arguments);
+    ctx.stroke = originalStroke;
+  }
+});
+Chart.defaults.ShadowLine = Chart.defaults.line;
+Chart.controllers.ShadowLine = Chart.controllers.line.extend({
+  datasetElementType: ShadowLineElement
+});
+*/
+
+ // https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+// https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html#Effect
+/*const defaultDropShadow = arcticBorealZoneLayer.effect = 'drop-shadow(1px 1px 2px #242424)';
+
+// DROP SHADOW //
+const dropShadowToggle = domConstruct.create('button', {
+  className: 'btn btn-small btn-white',
+  innerHTML: 'drop shadow'
+});
+dropShadowToggle.addEventListener('click', () => {
+  arcticBorealZoneLayer.effect = (arcticBorealZoneLayer.effect) ? null : defaultDropShadow;
+});
+view.ui.add(dropShadowToggle, 'bottom-right');*/
+
+
+// LEGEND //
+// const legend = new Legend({ view: view, layerInfos: [{ layer: arcticBorealZoneLayer }] });
+// view.ui.add(legend, 'bottom-left');
+
+
+// RENDERER DROPDOWN //
+const rendererDropdown = document.getElementById('renderer-dropdown');
+rendererDropdown.classList.remove('hide');
+
+// RENDERER PANEL //
+const rendererPanel = document.getElementById('renderer-panel');
+rendererPanel.addEventListener('click', evt => { evt.stopPropagation(); });
+
+
+// DEFAULT COLORS //
+const defaultColors = {
+  'Temp Means Trends': [new esriColor('#439bff'), new esriColor('#ffffff'), new esriColor('#fa3817')],
+  'Frozen Days Trends': [new esriColor('#fa3817'), new esriColor('#ffffff'), new esriColor('#439bff')]
+};
+
+for(const trendLayer of trendLayers){
+
+  const stats = trendLayer.serviceRasterInfo.statistics[slopeBandIndex];
+  const colors = defaultColors[trendLayer.title];
+
+  console.info(trendLayer.title, stats);
+
+  const trendRendererOptions = domConstruct.create('div', { className: 'panel panel-white' }, rendererPanel);
+  domConstruct.create('div', { innerHTML: trendLayer.title, className: 'font-size-0 text-center trailer-half' }, trendRendererOptions);
+
+  const colorSlider = new ColorSlider({
+    container: domConstruct.create('div', {}, trendRendererOptions),
+    primaryHandleEnabled: true,
+    handlesSyncedToPrimary: true,
+    min: stats.min,
+    max: stats.max,
+    stops: [
+      { value: stats.min, color: colors[0] },
+      { value: 0.0, color: colors[1] },
+      { value: stats.max, color: colors[2] }
+    ]
+  });
+  colorSlider.on(['min-change', 'max-change', 'thumb-change', 'thumb-drag'], evt => {
+    updateRenderer(trendLayer, stats, colorSlider.stops).catch(error => {
+      if(error.name !== 'AbortError'){console.error(error);}
+    });
+  });
+}
+
+const updateRenderer = promiseUtils.debounce((trendLayer, stats, stops) => {
+  console.info(trendLayer.title, stops);
+
+  trendLayer.set({
+    renderingRule: null,
+    bandIds: [slopeBandIndex],
+    renderer: {
+      type: "raster-stretch",
+      outputMin: 0,
+      outputMax: 255,
+      statistics: [[stops[0].value, stops[2].value, stats.avg, stats.stddev]],
+      stretchType: "min-max",
+      colorRamp: {
+        type: "multipart",
+        colorRamps: [
+          {
+            algorithm: 'hsv',
+            fromColor: stops[0].color.toRgba(),
+            toColor: stops[1].color.toRgba()
+          },
+          {
+            algorithm: 'hsv',
+            fromColor: stops[1].color.toRgba(),
+            toColor: stops[2].color.toRgba()
+          }
+        ]
+      }
+    }
+  });
+
+});
+
+
+// ROUND MAP //
+/*
+const roundMapToggle = domConstruct.create('button', {
+  className: 'btn btn-small btn-white',
+  innerHTML: 'round map'
+});
+roundMapToggle.addEventListener('click', () => {
+  view.container.classList.toggle('round');
+});
+view.ui.add(roundMapToggle, 'top-right');
+*/
+
+// CHART LAYOUT //
+/*
+const chartLayoutToggle = domConstruct.create('button', {
+  className: 'btn btn-small btn-white',
+  innerHTML: 'chart layout'
+});
+chartLayoutToggle.addEventListener('click', () => {
+  document.getElementById('left-container').classList.toggle('dir-col');
+});
+view.ui.add(chartLayoutToggle, 'top-right');
+*/
+
+ <!--<div id="renderer-dropdown" class="dropdown js-dropdown margin-left-1 header-text margin-right-4 hide">
+  <div class="top-nav-link header-text esri-interactive js-dropdown-toggle" tabindex="0" aria-haspopup="true" aria-expanded="false">
+    renderer
+  </div>
+  <nav class="dropdown-menu dropdown-right" role="menu">
+    <div id="renderer-panel"></div>
+  </nav>
+</div>-->
+
+#view-node.round .esri-view-surface {
+  border-radius : 50%;
+}
+
+#view-node.round .esri-overlay-surface {
+  border-radius : 49%;
+  box-shadow    : inset 0 0 20px 20px black;
+}
+
+// FOR TESTING ONLY //
+//watchUtils.init(view, 'zoom', zoom => {console.info(zoom, view.scale)});
+//watchUtils.init(view, 'extent', extent => { console.info(JSON.stringify(extent.toJSON()), view.scale); });
+
+
+/**
+ *
+ * @param view {MapView}
+ * @param layerTitle {String}
+ * @returns {Promise<Layer>}
+ */
+findLayer: function(view, layerTitle){
+  return promiseUtils.create((resolve, reject) => {
+    const foundLayer = view.map.allLayers.find(layer => { return (layer.title === layerTitle); });
+    if(foundLayer){
+      foundLayer.load().then(() => { resolve(foundLayer); }).catch(reject);
+    } else { resolve(); }
+  });
+},
+
+// TREND LAYERS RENDERERS //
+//this.initializeTrendRenderers(view, trendLayers);
+
+/**
+ *
+ * @param view
+ * @param trendLayers
+ */
+initializeTrendRenderers: function(view, trendLayers){
+
+  const red = new esriColor('#fa3817');
+  const white = new esriColor('#ffffff');
+  const blue = new esriColor('#439bff');
+
+  const defaultRendererInfos = {
+    'Temp Means Trends': {
+      stops: [
+        { value: -0.1, color: blue.toRgb() },
+        { value: 0.0, color: white.toRgb() },
+        { value: 0.1, color: red.toRgb() }
+      ]
+    },
+    'Frozen Days Trends': {
+      stops: [
+        { value: -1.0, color: red.toRgb() },
+        { value: 0.0, color: white.toRgb() },
+        { value: 1.0, color: blue.toRgb() }
+      ]
+    }
+  };
+
+  // SLOPE BAND INDEX //
+  const slopeBandIndex = 0;
+
+  const applyRenderer = (trendLayer) => {
+    const stats = trendLayer.serviceRasterInfo.statistics[slopeBandIndex];
+    const stops = defaultRendererInfos[trendLayer.title].stops;
+
+    trendLayer.set({
+      renderingRule: null,
+      interpolation: 'bilinear',
+      //format: 'lerc',
+      bandIds: [slopeBandIndex],
+      renderer: {
+        type: 'raster-stretch',
+        stretchType: 'min-max',
+        statistics: [[stops[0].value, stops[2].value, stats.avg, stats.stddev]],
+        outputMin: 0,
+        outputMax: 255,
+        colorRamp: {
+          type: "multipart",
+          colorRamps: [
+            {
+              algorithm: 'hsv',
+              fromColor: stops[0].color,
+              toColor: stops[1].color
+            },
+            {
+              algorithm: 'hsv',
+              fromColor: stops[1].color,
+              toColor: stops[2].color
+            }
+          ]
+        }
+      }
+    });
+  };
+
+  // APPLY DEFAULT RENDERERS //
+  trendLayers.forEach(applyRenderer);
+
+},

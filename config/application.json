@@ -1,0 +1,235 @@
+{
+  "title": "The Thawing Arctic-Boreal Zone",
+  "place": "Anchorage, AK",
+  "appid": "",
+  "group": "",
+  "webmap": "875f883c8c66410c957ac3ebe1ffb8d5",
+  "webscene": "",
+  "portalUrl": "https://www.arcgis.com",
+  "oauthappid": null,
+  "proxyUrl": "",
+  "units": "dual",
+  "helperServices": {
+    "geometry": {
+      "url": null
+    },
+    "printTask": {
+      "url": null
+    },
+    "elevationSync": {
+      "url": null
+    },
+    "geocode": [
+      {
+        "url": null
+      }
+    ]
+  },
+  "constraintExtent": {
+    "type": "extent",
+    "spatialReference": {
+      "latestWkid": 5936,
+      "wkid": 5936
+    },
+    "xmin": -4582953.162796516,
+    "ymin": -4632254.005821449,
+    "xmax": 8477013.192500386,
+    "ymax": 8293381.266963829
+  },
+  "imageryGroupLayers": [
+    {
+      "layerProperties": {
+        "title": "Arctic Thaw ByYear",
+        "visible": false,
+        "blendMode": "normal"
+      },
+      "layers": [
+        {
+          "title": "Temp Means ByYear",
+          "visible": false,
+          "url": "https://geoxc2-imagery.bd.esri.com/arcgis/rest/services/Temp_Means_ByYear/ImageServer"
+        },
+        {
+          "title": "Frozen Days ByYear",
+          "visible": false,
+          "url": "https://geoxc2-imagery.bd.esri.com/arcgis/rest/services/Woodwell/Frozen_Days_ByYear/ImageServer"
+        }
+      ]
+    },
+    {
+      "layerProperties": {
+        "title": "Arctic Thaw Trends",
+        "visible": true,
+        "blendMode": "multiply"
+      },
+      "layers": [
+        {
+          "title": "Temp Means Trends",
+          "visible": true,
+          "url": "https://geoxc2-imagery.bd.esri.com/arcgis/rest/services/Temp_Means_Trends/ImageServer"
+        },
+        {
+          "title": "Frozen Days Trends",
+          "visible": false,
+          "url": "https://geoxc2-imagery.bd.esri.com/arcgis/rest/services/Woodwell/Frozen_Days_Trends/ImageServer"
+        }
+      ]
+    }
+  ],
+  "UI": {
+    "trendTypeDescriptions": {
+      "Air Temperature": "This variable represents surface air temperature at 1/24° (~4 km) spatial resolution, derived from the TerraClimate data set (Abatzglou et al., 2018).",
+      "Frozen Ground": "This variable represents the number of days the ground surface was frozen according to the Freeze-thaw Earth System Data Record (FT-ESDR), which is based on satellite microwave remote sensing of brightness temperatures (Kim et al., 2017)."
+    },
+    "arcticBorealZoneByYear": {
+      "FrozenDaysByYear": [
+        175.30,
+        172.97,
+        167.60,
+        173.87,
+        171.10,
+        172.74,
+        174.36,
+        172.99,
+        175.09,
+        168.60,
+        172.41,
+        167.22,
+        170.09,
+        174.97,
+        171.13,
+        169.40,
+        166.89,
+        174.41,
+        165.80,
+        171.37,
+        169.13,
+        168.87,
+        167.68,
+        171.62,
+        164.93,
+        171.99,
+        162.30,
+        166.88,
+        162.97,
+        164.12,
+        168.20,
+        164.92,
+        163.39,
+        167.99,
+        167.54,
+        165.02,
+        162.06,
+        163.59,
+        162.96,
+        167.38,
+        159.36
+      ],
+      "TempMeansByYear": [
+        -7.173093059,
+        -7.535489122,
+        -7.525265232,
+        -6.945467577,
+        -7.177850209,
+        -8.011963076,
+        -8.029550164,
+        -8.407056649,
+        -6.955648116,
+        -7.629929501,
+        -7.944216195,
+        -7.656675848,
+        -7.378986067,
+        -8.302269019,
+        -6.992490954,
+        -7.976936981,
+        -6.902878358,
+        -7.701841286,
+        -7.243188374,
+        -7.410433344,
+        -7.88086,
+        -7.213909884,
+        -6.003194218,
+        -7.699242484,
+        -6.72792773,
+        -7.29541835,
+        -7.485507767,
+        -7.156883575,
+        -7.532845005,
+        -6.485385271,
+        -6.736969493,
+        -6.720995334,
+        -6.609300164,
+        -7.247554037,
+        -6.601824409,
+        -6.943991617,
+        -5.863311168,
+        -6.916567108,
+        -6.439579577,
+        -6.521545737,
+        -6.697184311,
+        -6.567670365,
+        -6.36001707,
+        -6.33385684,
+        -5.972239878,
+        -6.875055479,
+        -5.609437684,
+        -6.134579327,
+        -5.569336214,
+        -6.017364695,
+        -6.610777915,
+        -5.896055244,
+        -5.586605067,
+        -6.008986165,
+        -6.172335015,
+        -5.882871893,
+        -5.553275294,
+        -5.197138426,
+        -5.434255529,
+        -5.972021638,
+        -4.869558828
+      ]
+    },
+    "arcticBorealZoneTrends": {
+      "Temp Means Trends": {
+        "1959": 0.39,
+        "1969": 0.46,
+        "1979": 0.48,
+        "1989": 0.49,
+        "1999": 0.57
+      },
+      "Frozen Days Trends": {
+        "1959": null,
+        "1969": null,
+        "1979": -2.70,
+        "1989": -2.86,
+        "1999": -2.84
+      }
+    },
+    "learnMoreMenu": {
+      "Arctic Maps": [
+        {
+          "label": "Mapping Arctic Change",
+          "title": "Learn more about the thawing arctic...",
+          "url": "https://woodwell-arctic-boreal-group-whrc.hub.arcgis.com/"
+        },
+        {
+          "label": "link to StoryMap",
+          "title": "",
+          "url": "#"
+        },
+        {
+          "label": "link to Other",
+          "title": "",
+          "url": "#"
+        }
+      ],
+      "Woodwell": [
+        {
+          "label": "Woodwell Climate Research Center",
+          "title": "Arctic research at Woodwell Climate Research Center...",
+          "url": "https://www.woodwellclimate.org/research-area/arctic/"
+        }
+      ]
+    }
+  }
+}
