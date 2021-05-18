@@ -92,10 +92,13 @@ define([
       viewProperties.center = [180.0, 90.0];
       viewProperties.scale = 56411890.0;
       viewProperties.constraints = {
-        snapToZoom: false,
-        minScale: 112823780.0,
-        maxScale: 4386589.0,
-        geometry: this.base.config.constraintExtent
+        minZoom: 4,
+        maxZoom: 9,
+        geometry: this.base.config.constraintExtent,
+        snapToZoom: false
+      };
+      viewProperties.navigation = {
+        mouseWheelZoomEnabled: true
       };
 
       const portalItem = this.base.results.applicationItem.value;
@@ -120,8 +123,18 @@ define([
      */
     viewReady: function(item, view){
       return promiseUtils.create((resolve, reject) => {
+
         // STARTUP DIALOG //
         this.initializeStartupDialog();
+
+        // ZOOM SCALE FACTOR //
+        const ZOOM_SCALE_FACTOR = 0.02;
+
+        // PROVIDE ADDITIONAL MOUSE-WHEEL GRANULARITY //
+        view.on("mouse-wheel", (event) => {
+          const direction = (event.deltaY > 0) ? 1 : -1;
+          view.scale *= 1 + (ZOOM_SCALE_FACTOR * direction);
+        });
 
         // HOME //
         const home = new Home({ view: view });
