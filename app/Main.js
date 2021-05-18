@@ -98,7 +98,7 @@ define([
         snapToZoom: false
       };
       viewProperties.navigation = {
-        mouseWheelZoomEnabled: true
+        mouseWheelZoomEnabled: false
       };
 
       const portalItem = this.base.results.applicationItem.value;
@@ -128,12 +128,16 @@ define([
         this.initializeStartupDialog();
 
         // ZOOM SCALE FACTOR //
-        const ZOOM_SCALE_FACTOR = 0.02;
+        const navigation = view.mapViewNavigation;
+        view.constraints.snapToZoom = false;
+        const ZOOM_SCALE_FACTOR = 0.15;
 
         // PROVIDE ADDITIONAL MOUSE-WHEEL GRANULARITY //
         view.on("mouse-wheel", (event) => {
-          const direction = (event.deltaY > 0) ? 1 : -1;
-          view.scale *= 1 + (ZOOM_SCALE_FACTOR * direction);
+          const { x, y, deltaY } = event;
+          const direction = (deltaY > 0) ? 1 : -1;
+          const scaleFactor = 1 + (ZOOM_SCALE_FACTOR * direction);
+          navigation.zoom(scaleFactor, [x, y]);
         });
 
         // HOME //
